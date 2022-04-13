@@ -251,7 +251,7 @@
 
       it('should return all odd numbers in an array', function() {
         var isOdd = function(num) { return num % 2 !== 0; };
-        var odds = [1,2,3,4,5];
+        var odds = _.filter([1,2,3,4,5], isOdd);
 
         expect(odds).to.eql([1, 3, 5]);
       });
@@ -332,7 +332,7 @@
         var iterator = function(value) { return value === 1; };
         var numbers = [1, 2, 2, 3, 4, 4];
 
-        expect(_.uniq(numbers)).to.eql([1, 2]);
+        expect(_.uniq(numbers,true,iterator)).to.eql([1, 2]);
       });
 
       it('should produce a brand new array instead of modifying the input array', function() {
@@ -401,7 +401,7 @@
           { name: 'curly', age: 50 }
         ];
 
-        expect(_.pluck(people, 'name')).to.equal(['moe', 'curly']);
+        expect(_.pluck(people,'name')).to.eql(['moe','curly']);
       });
 
       it('should not modify the original array', function() {
@@ -412,7 +412,7 @@
 
         _.pluck(people, 'name');
 
-        expect(people).to.equal([{ name: 'moe', age: 30 }, { name: 'curly', age: 50 }]);
+        expect(people).to.eql([{ name: 'moe', age: 30 }, { name: 'curly', age: 50 }]);
       });
     });
 
@@ -502,7 +502,7 @@
         expect(result).to.equal(4);
       });
 
-      it('Fill me in with a description of the behavior this test is checking for', function() {
+      it('should pass every item of the array into the iterator if a memo is passed in', function() {
         var result = _.reduce([1, 2, 3], function(memo, item) {
           return memo * item;
         }, 0);
